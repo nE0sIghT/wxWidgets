@@ -4295,51 +4295,46 @@ if test "$wxUSE_OPENGL" = "yes"; then
             AC_CHECK_HEADER(GL/glu.h, [
                 found_gl=0
 
-                AC_MSG_CHECKING([for -lGL])
-                WX_PATH_FIND_LIBRARIES([$SEARCH_LIB /opt/graphics/OpenGL/lib],GL)
+                WX_FIND_LIB([$SEARCH_LIB /opt/graphics/OpenGL/lib], GL, glBegin)
                 if test "$ac_find_libraries" != "" ; then
-                    AC_MSG_RESULT([found in $ac_find_libraries])
-
-                    WX_LINK_PATH_EXIST([$ac_find_libraries],[$LDFLAGS])
-                    if test "$ac_path_to_link" != " -L/usr/lib" ; then
+                    if test "$ac_find_libraries" != "std" ; then
+                      WX_LINK_PATH_EXIST([$ac_find_libraries],[$LDFLAGS])
+                      if test "$ac_path_to_link" != " -L/usr/lib" ; then
                         LDFLAGS_GL="$ac_path_to_link"
+                      fi
                     fi
 
                     dnl don't suppose that libGL and libGLU are always in the
                     dnl same directory -- this is not true for some common
                     dnl distributions
-                    AC_MSG_CHECKING([for -lGLU])
-                    WX_PATH_FIND_LIBRARIES([$SEARCH_LIB],GLU)
+                    WX_FIND_LIB([$SEARCH_LIB], GLU, gluBeginCurve)
                     if test "$ac_find_libraries" != "" ; then
+                      if test "$ac_find_libraries" != "std" ; then
                         WX_LINK_PATH_EXIST([$ac_find_libraries],[$LDFLAGS])
                         if test "$ac_path_to_link" != " -L/usr/lib" -a \
-                                    "$ac_path_to_link" != "$LDFLAGS_GL"; then
-                            LDFLAGS_GL="$LDFLAGS_GL$ac_path_to_link"
+                                "$ac_path_to_link" != "$LDFLAGS_GL" ; then
+                          LDFLAGS_GL="$LDFLAGS_GL$ac_path_to_link"
                         fi
+                      fi
 
                         found_gl=1
                         OPENGL_LIBS="-lGL -lGLU"
-                        AC_MSG_RESULT([yes])
-                    else
-                        AC_MSG_RESULT([no])
                     fi
-                else
-                    AC_MSG_RESULT([no])
                 fi
 
                 if test "$found_gl" != 1; then
-                    AC_MSG_CHECKING([for -lMesaGL])
-                    WX_PATH_FIND_LIBRARIES([$SEARCH_LIB],MesaGL)
+                    WX_FIND_LIB([$SEARCH_LIB], MesaGL, glEnable)
                     if test "$ac_find_libraries" != "" ; then
+                      if test "$ac_find_libraries" != "std" ; then
                         WX_LINK_PATH_EXIST([$ac_find_libraries],[$LDFLAGS])
-                        LDFLAGS_GL="$LDFLAGS$ac_path_to_link"
-                        OPENGL_LIBS="-lMesaGL -lMesaGLU"
-                        AC_MSG_RESULT([yes])
-                    else
-                        AC_MSG_RESULT([no])
+                        if test "$ac_path_to_link" != " -L/usr/lib" ; then
+                          LDFLAGS_GL="$LDFLAGS_GL$ac_path_to_link"
+                        fi
+                      fi
+                      OPENGL_LIBS="-lMesaGL -lMesaGLU"
                     fi
                 fi
-            ])
+            ],, [ ])
         ],
         [],
         [ ])
