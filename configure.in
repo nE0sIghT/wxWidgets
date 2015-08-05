@@ -2767,7 +2767,7 @@ if test "$build" != "$host" -a "$GCC" = yes; then
             x_includes=$ac_find_includes
         fi
         if test -z "$x_libraries" -o "$x_libraries" = NONE; then
-            WX_PATH_FIND_LIBRARIES($SEARCH_LIB, Xt)
+            WX_PATH_FIND_LIBRARIES(Xt)
             x_libraries=$ac_find_libraries
         fi
     fi
@@ -3554,7 +3554,7 @@ libraries returned by 'pkg-config gtk+-2.0 --libs' or 'gtk-config
         dnl test for external libxpm if we're configured to use it
         if test "$wxUSE_GPE" = "yes"; then
             AC_MSG_CHECKING(for gpewidget library)
-            WX_PATH_FIND_LIBRARIES($SEARCH_LIB,gpewidget)
+            WX_PATH_FIND_LIBRARIES(gpewidget)
             if test "$ac_find_libraries" != "" ; then
                 WX_LINK_PATH_EXIST($ac_find_libraries,$GUI_TK_LIBRARY)
                 dnl -lgpewidget must be before all GTK libs and
@@ -3567,7 +3567,7 @@ libraries returned by 'pkg-config gtk+-2.0 --libs' or 'gtk-config
             fi
 
             dnl AC_MSG_CHECKING(for gpe library)
-            dnl WX_PATH_FIND_LIBRARIES($SEARCH_LIB,gpe)
+            dnl WX_PATH_FIND_LIBRARIES(gpe)
             dnl if test "$ac_find_libraries" != "" ; then
             dnl     WX_LINK_PATH_EXIST($ac_find_libraries,$GUI_TK_LIBRARY)
             dnl     GUI_TK_LIBRARY="$GUI_TK_LIBRARY -lgpe"
@@ -3817,7 +3817,7 @@ libraries returned by 'pkg-config gtk+-2.0 --libs' or 'gtk-config
 
 
         AC_MSG_CHECKING(for Motif/Lesstif library)
-        WX_PATH_FIND_LIBRARIES($SEARCH_LIB, Xm)
+        WX_PATH_FIND_LIBRARIES(Xm)
 
         if test "x$ac_find_libraries" != "x" ; then
             AC_MSG_RESULT(found in $ac_find_libraries)
@@ -3956,7 +3956,7 @@ libraries returned by 'pkg-config gtk+-2.0 --libs' or 'gtk-config
         dnl test for external libxpm if we're configured to use it
         if test "$wxUSE_LIBXPM" = "sys"; then
             AC_MSG_CHECKING(for Xpm library)
-            WX_PATH_FIND_LIBRARIES($SEARCH_LIB,Xpm)
+            WX_PATH_FIND_LIBRARIES(Xpm)
             if test "$ac_find_libraries" != "" ; then
                 WX_LINK_PATH_EXIST($ac_find_libraries,$GUI_TK_LIBRARY)
                 GUI_TK_LIBRARY="$GUI_TK_LIBRARY$ac_path_to_link"
@@ -4295,7 +4295,7 @@ if test "$wxUSE_OPENGL" = "yes"; then
             AC_CHECK_HEADER(GL/glu.h, [
                 found_gl=0
 
-                WX_FIND_LIB([$SEARCH_LIB /opt/graphics/OpenGL/lib], GL, glBegin)
+                WX_FIND_LIB(GL, glBegin, [/opt/graphics/OpenGL/lib])
                 if test "$ac_find_libraries" != "" ; then
                     if test "$ac_find_libraries" != "std" ; then
                       WX_LINK_PATH_EXIST([$ac_find_libraries],[$LDFLAGS])
@@ -4307,7 +4307,7 @@ if test "$wxUSE_OPENGL" = "yes"; then
                     dnl don't suppose that libGL and libGLU are always in the
                     dnl same directory -- this is not true for some common
                     dnl distributions
-                    WX_FIND_LIB([$SEARCH_LIB], GLU, gluBeginCurve)
+                    WX_FIND_LIB(GLU, gluBeginCurve, [/opt/graphics/OpenGL/lib])
                     if test "$ac_find_libraries" != "" ; then
                       if test "$ac_find_libraries" != "std" ; then
                         WX_LINK_PATH_EXIST([$ac_find_libraries],[$LDFLAGS])
@@ -4323,7 +4323,7 @@ if test "$wxUSE_OPENGL" = "yes"; then
                 fi
 
                 if test "$found_gl" != 1; then
-                    WX_FIND_LIB([$SEARCH_LIB], MesaGL, glEnable)
+                    WX_FIND_LIB(MesaGL, glEnable, [/opt/graphics/OpenGL/lib])
                     if test "$ac_find_libraries" != "" ; then
                       if test "$ac_find_libraries" != "std" ; then
                         WX_LINK_PATH_EXIST([$ac_find_libraries],[$LDFLAGS])
